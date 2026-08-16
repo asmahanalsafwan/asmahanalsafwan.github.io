@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Academic website of Asmahan Matooq S Al Safwan, independent researcher in early childhood education, narrative pedagogy, curriculum, conceptual change and science education." />
+  <meta name="author" content="Asmahan Matooq S Al Safwan" />
+  <title>Asmahan Matooq S Al Safwan | Independent Researcher</title>
+  <style>
+    :root {
+      --ink: #18212b;
+      --muted: #5f6b76;
+      --paper: #ffffff;
+      --soft: #f5f7f8;
+      --line: #dde3e7;
+      --accent: #1f5d5a;
+      --accent-soft: #eaf3f2;
+      --gold: #aa7a2a;
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { text-decoration-thickness: 2px; }
+    .wrap { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { font-weight: 750; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
+    .navlinks { display: flex; gap: 20px; flex-wrap: wrap; }
+    .navlinks a { color: var(--muted); text-decoration: none; font-size: .94rem; }
+    .navlinks a:hover { color: var(--ink); }
+    .hero {
+      padding: 88px 0 70px;
+      background:
+        radial-gradient(circle at 82% 20%, rgba(31,93,90,.10), transparent 30%),
+        linear-gradient(180deg, #fff 0%, #fbfcfc 100%);
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .78rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(2.35rem, 6vw, 4.65rem);
+      line-height: 1.03;
+      letter-spacing: -.045em;
+      font-weight: 780;
+    }
+    .subtitle {
+      max-width: 760px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+    .chips { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 28px; }
+    .chip {
+      border: 1px solid #cedbd9;
+      background: var(--accent-soft);
+      color: #214c4a;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: .9rem;
+    }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .94rem;
+      border: 1px solid var(--accent);
+    }
+    .btn.primary { color: #fff; background: var(--accent); }
+    .btn.secondary { color: var(--accent); background: #fff; }
+    section { padding: 72px 0; }
+    section.alt { background: var(--soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .section-head { margin-bottom: 34px; }
+    .section-head h2 { margin: 0 0 10px; font-size: 1.8rem; letter-spacing: -.025em; }
+    .section-head p { margin: 0; color: var(--muted); max-width: 750px; }
+    .grid-2 { display: grid; grid-template-columns: 1.05fr .95fr; gap: 38px; }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(24,33,43,.04);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 1.08rem; }
+    .card p { margin: 0; color: var(--muted); }
+    .timeline { display: grid; gap: 22px; }
+    .timeline-item { display: grid; grid-template-columns: 100px 1fr; gap: 18px; }
+    .year { color: var(--gold); font-weight: 800; }
+    .timeline-item h3 { margin: 0 0 5px; font-size: 1rem; }
+    .timeline-item p { margin: 0; color: var(--muted); }
+    .pubs { display: grid; gap: 18px; }
+    .pub {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .pub:last-child { border-bottom: 0; padding-bottom: 0; }
+    .pub-title { font-weight: 760; line-height: 1.4; }
+    .pub-meta { color: var(--muted); margin-top: 4px; font-size: .95rem; }
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project { min-height: 190px; }
+    .project .tag { color: var(--accent); font-weight: 800; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+    .project h3 { margin-top: 9px; font-size: 1.13rem; }
+    .contact-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      background: #fff;
+    }
+    .contact-box h2 { margin: 0 0 7px; }
+    .contact-box p { margin: 0; color: var(--muted); }
+    footer { border-top: 1px solid var(--line); padding: 30px 0 42px; color: var(--muted); font-size: .9rem; }
+    .small-note { font-size: .85rem; color: var(--muted); margin-top: 16px; }
+    @media (max-width: 820px) {
+      .navlinks { display: none; }
+      .hero { padding-top: 65px; }
+      .grid-2, .project-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 72px 1fr; }
+      .contact-box { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      header, .actions { display: none; }
+      body { font-size: 10.5pt; }
+      .hero, section { padding: 30px 0; }
+      .card { box-shadow: none; break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav aria-label="Primary navigation">
+        <a class="brand" href="#top">Asmahan Al Safwan</a>
+        <div class="navlinks">
+          <a href="#about">About</a>
+          <a href="#research">Research</a>
+          <a href="#publications">Selected work</a>
+          <a href="#journey">Academic journey</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Independent researcher · educator</div>
+        <h1>Asmahan Matooq S Al Safwan</h1>
+        <p class="subtitle">
+          Researching how narrative, inquiry and curriculum can support meaningful learning across early childhood and education, informed by an interdisciplinary background in physics, science education and conceptual change.
+        </p>
+        <div class="chips" aria-label="Research interests">
+          <span class="chip">Early childhood education</span>
+          <span class="chip">Narrative pedagogy</span>
+          <span class="chip">Curriculum</span>
+          <span class="chip">Conceptual change</span>
+          <span class="chip">Science education</span>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="#research">Explore research</a>
+          <a class="btn secondary" href="Asmahan_Al_Safwan_Academic_CV_v.1.docx">Academic CV</a>
+          <a class="btn secondary" href="https://orcid.org/0000-0002-3573-0236" target="_blank" rel="noopener">ORCID</a>
+          <a class="btn secondary" href="mailto:Asma_al_safwa@hotmail.com">Email</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>About</h2>
+          <p>A research profile shaped by movement across disciplines rather than confinement to a single one.</p>
+        </div>
+        <div class="grid-2">
+          <div>
+            <p>
+              I am an independent educational researcher and early childhood educator with an interdisciplinary academic background spanning physics, nanotechnology and materials science, science education, conceptual change, curriculum and narrative pedagogy.
+            </p>
+            <p>
+              My current work develops <strong>The Guardian Pedagogy</strong>, a narrative-based pedagogical framework concerned with how stories can become enduring, renewable sources of learning. The work explores story affordances, inquiry, human questions, documentation and the role of educators in recognising and extending learning generated through narrative.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Current research focus</h3>
+            <p><strong>Central proposition:</strong> How do Guardian Stories become enduring, renewable sources of learning?</p>
+            <p class="small-note">Current conceptual work examines Story Affordances, the Guardian Inquiry Cycle and Human Questions in Narrative.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="research" class="alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Current research programme</h2>
+          <p>The Guardian Pedagogy is being developed as a connected programme of conceptual scholarship rather than a single isolated publication.</p>
+        </div>
+        <div class="project-grid">
+          <article class="card project">
+            <div class="tag">Concept 01</div>
+            <h3>Story Affordances</h3>
+            <p>Examines how educational possibilities emerge relationally among narrative features, children or groups, and the learning context.</p>
+          </article>
+          <article class="card project">
+            <div class="tag">Concept 02</div>
+            <h3>Guardian Inquiry Cycle</h3>
+            <p>Models how narrative encounters can move through wonder, inquiry, intentional teaching, documentation and renewed story possibilities.</p>
+          </article>
+          <article class="card project">
+            <div class="tag">Concept 03</div>
+            <h3>Human Questions</h3>
+            <p>Explores continuity-bearing questions of human meaning that remain recognisable while interpretations and answers remain open to change.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="publications">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Selected scholarship</h2>
+          <p>A selected record showing the development from physical sciences to science education and contemporary pedagogical research.</p>
+        </div>
+        <div class="pubs">
+          <article class="pub">
+            <div class="pub-title">X-Ray Diffraction Study on the In-Situ Crystallization Kinetics in Electrospun PVP/TiO₂ Nanofibers</div>
+            <div class="pub-meta">Albetran H, Alsafwan A, Haroosh H, Dong Y &amp; Low IM · 2013 · <em>Nanostructured Materials and Nanotechnology VII</em>, 35–49.</div>
+            <div class="pub-meta"><a href="https://doi.org/10.1002/9781118807828.ch4" target="_blank" rel="noopener">DOI: 10.1002/9781118807828.ch4</a></div>
+          </article>
+          <article class="pub">
+            <div class="pub-title">Saudi Female High School Students’ and Teachers’ Understandings of Thermal Concepts</div>
+            <div class="pub-meta">Doctoral thesis · Curtin University · research in science education, conceptual understanding, language and culture.</div>
+          </article>
+          <article class="pub">
+            <div class="pub-title">An Arabic Culture Model of Conceptual Change</div>
+            <div class="pub-meta">Al Safwan A, Treagust D &amp; Zadnik M · 2018 · Second Inter-Regional Research Conference on Science and Mathematics Education.</div>
+          </article>
+          <article class="pub">
+            <div class="pub-title">Female High School Students Understanding of Thermal Concepts</div>
+            <div class="pub-meta">Al Safwan A · 2015 · Australian Association for Research in Education (AARE) · refereed abstract.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey" class="alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Academic journey</h2>
+          <p>An interdisciplinary trajectory connecting physical science, learning and pedagogy.</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="year">1990</div>
+            <div><h3>Bachelor of Science (Physics)</h3><p>Dammam University, Saudi Arabia.</p></div>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2013</div>
+            <div><h3>Master of Science (Physics)</h3><p>Curtin University of Technology, Australia.</p></div>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2013</div>
+            <div><h3>Nanotechnology and materials science publication</h3><p>Co-authored Wiley work on electrospun PVP/TiO₂ nanofibres.</p></div>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2015–19</div>
+            <div><h3>Science education and conceptual change research</h3><p>Conference scholarship across AARE, international science education meetings and doctoral research at Curtin.</p></div>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2019</div>
+            <div><h3>Doctor of Philosophy</h3><p>Curtin University, Australia. Thesis focused on Saudi female high school students’ and teachers’ understandings of thermal concepts.</p></div>
+          </div>
+          <div class="timeline-item">
+            <div class="year">Current</div>
+            <div><h3>Early childhood education and narrative pedagogy</h3><p>Developing The Guardian Pedagogy and associated conceptual papers.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-box">
+          <div>
+            <h2>Contact</h2>
+            <p>For scholarly correspondence, publication enquiries and research collaboration.</p>
+          </div>
+          <div class="actions" style="margin-top:0">
+            <a class="btn primary" href="mailto:Asma_al_safwa@hotmail.com">Email Asmahan</a>
+            <a class="btn secondary" href="https://orcid.org/0000-0002-3573-0236" target="_blank" rel="noopener">View ORCID</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> Asmahan Matooq S Al Safwan. Academic and research website.</div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
