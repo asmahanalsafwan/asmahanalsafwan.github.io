@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Academic website of Dr Asmahan Al Safwan, an education researcher with a background spanning physics, applied physics, science and STEM education, conceptual change, curriculum and early childhood pedagogy.">
+  <meta name="description" content="Academic website of Asmahan Al Safwan, an education researcher with a background spanning physics, applied physics, science and STEM education, conceptual change, curriculum and early childhood pedagogy.">
   <meta name="author" content="Asmahan Matooq S Al Safwan">
   <meta name="theme-color" content="#08264b">
   <link rel="canonical" href="https://asmahanalsafwan.github.io/">
   <link rel="me" href="https://scholar.google.com/citations?user=uh-9dD4AAAAJ&hl=en">
   <link rel="me" href="https://orcid.org/0000-0002-3573-0236">
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="Dr Asmahan Al Safwan | Science &amp; STEM Education Researcher">
+  <meta property="og:title" content="Asmahan Al Safwan | Science &amp; STEM Education Researcher">
   <meta property="og:description" content="Research across physics and science education, STEM education, conceptual change, curriculum and early childhood pedagogy.">
   <meta property="og:url" content="https://asmahanalsafwan.github.io/">
-  <title>Dr Asmahan Al Safwan | Science &amp; STEM Education Researcher</title>
+  <title>Asmahan Al Safwan | Science &amp; STEM Education Researcher</title>
   <style>
     :root {
       --navy:#08264b;
@@ -36,7 +36,8 @@
     a{color:var(--navy-2);text-decoration-thickness:1px;text-underline-offset:3px}
     a:hover{text-decoration-thickness:2px}
     .wrap{width:min(calc(100% - 42px),var(--max));margin:0 auto}
-    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+    header{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);transform:translateY(-105%);opacity:0;pointer-events:none;transition:transform .24s ease,opacity .24s ease}
+    header.header-visible{transform:translateY(0);opacity:1;pointer-events:auto}
     nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:30px}
     .brand{font-size:1.62rem;color:var(--navy);text-decoration:none;letter-spacing:-.02em;white-space:nowrap}
     .navlinks{display:flex;gap:30px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
@@ -119,7 +120,7 @@
 <header>
   <div class="wrap">
     <nav aria-label="Primary navigation">
-      <a class="brand" href="#top">Dr Asmahan Al Safwan</a>
+      <a class="brand" href="#top">Asmahan Al Safwan</a>
       <div class="navlinks">
         <a href="#about">About</a><a href="#research">Research</a><a href="#publications">Scholarship</a><a href="#journey">Journey</a><a href="#profiles">Profiles</a><a href="#contact">Contact</a>
       </div>
@@ -305,8 +306,8 @@
 
   shareButton.addEventListener('click', async () => {
     const shareData = {
-      title: 'Dr Asmahan Al Safwan | Science & STEM Education Researcher',
-      text: 'Academic profile of Dr Asmahan Al Safwan – science and STEM education, physics education and early childhood pedagogy',
+      title: 'Asmahan Al Safwan | Science & STEM Education Researcher',
+      text: 'Academic profile of Asmahan Al Safwan – science and STEM education, physics education and early childhood pedagogy',
       url: publicProfileUrl
     };
     if (navigator.share) {
@@ -321,6 +322,20 @@
       await copyProfileUrl();
     }
   });
+
+
+  const siteHeader = document.querySelector('header');
+  const heroName = document.querySelector('.hero h1');
+  if (siteHeader && heroName) {
+    const syncHeader = () => {
+      const rect = heroName.getBoundingClientRect();
+      const heroNameStillVisible = rect.bottom > 84;
+      siteHeader.classList.toggle('header-visible', !heroNameStillVisible);
+    };
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+    window.addEventListener('resize', syncHeader);
+  }
 
   const counterScript = document.createElement('script');
   counterScript.async = true;
