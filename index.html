@@ -199,11 +199,10 @@
       white-space: nowrap;
     }
     .view-counter-label { font-size: .84rem; }
-    .view-counter img {
-      display: block;
-      height: 24px;
-      width: auto;
-      max-width: 165px;
+    .view-counter-value {
+      font-weight: 700;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
     }
     .share-status { margin-left: 8px; font-size: .84rem; color: var(--muted); }
 
@@ -395,21 +394,39 @@
   <footer>
     <div class="wrap footer-row">
       <div>© <span id="year"></span> Asmahan Matooq S Al Safwan.</div>
-      <div class="view-counter" id="viewCounter" aria-label="Page views">
-        <span class="view-counter-label">Page views</span>
-        <img
-          src="https://profile-counter.deno.dev/asmahanalsafwan-academic-website/count.svg"
-          alt="Page view count"
-          decoding="async"
-          referrerpolicy="no-referrer"
-          onerror="document.getElementById('viewCounter').hidden=true"
-        />
+      <div class="view-counter" id="viewCounter" aria-label="Visitor count" hidden>
+        <span class="view-counter-label">Visitors</span>
+        <span class="view-counter-value" id="visitorCount" aria-live="polite"></span>
       </div>
     </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Count unique visitors through CounterAPI. The counter remains hidden if the service is unavailable.
+    const viewCounter = document.getElementById('viewCounter');
+    const visitorCount = document.getElementById('visitorCount');
+    let counterLoaded = false;
+
+    window.updateVisitorCount = function(response) {
+      const value = response && Number(response.value);
+      if (Number.isFinite(value)) {
+        visitorCount.textContent = value.toLocaleString();
+        viewCounter.hidden = false;
+        counterLoaded = true;
+      }
+    };
+
+    const counterScript = document.createElement('script');
+    counterScript.async = true;
+    counterScript.src = 'https://counterapi.com/api/asmahanalsafwan.github.io/view/homepage?unique=true&callback=updateVisitorCount';
+    counterScript.onerror = function() { viewCounter.hidden = true; };
+    document.body.appendChild(counterScript);
+
+    setTimeout(function() {
+      if (!counterLoaded) viewCounter.hidden = true;
+    }, 6000);
 
     const shareBtn = document.getElementById('shareBtn');
     const shareStatus = document.getElementById('shareStatus');
