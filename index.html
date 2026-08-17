@@ -192,18 +192,21 @@
     .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
     .view-counter {
       display: inline-flex;
-      align-items: center;
+      align-items: baseline;
       gap: 8px;
       min-height: 26px;
       color: var(--muted);
       white-space: nowrap;
+      font-size: .84rem;
     }
-    .view-counter-label { font-size: .84rem; }
-    .view-counter-value {
+    .view-counter .counterapi {
+      display: inline-block;
+      min-height: 1em;
       font-weight: 700;
       color: var(--ink);
       font-variant-numeric: tabular-nums;
     }
+    .counter-note { color: var(--muted); font-weight: 400; }
     .share-status { margin-left: 8px; font-size: .84rem; color: var(--muted); }
 
     @media (max-width: 900px) { .navlinks { display: none; } }
@@ -394,9 +397,9 @@
   <footer>
     <div class="wrap footer-row">
       <div>© <span id="year"></span> Asmahan Matooq S Al Safwan.</div>
-      <div class="view-counter" id="viewCounter" aria-label="Visitor count" hidden>
-        <span class="view-counter-label">Visitors</span>
-        <span class="view-counter-value" id="visitorCount" aria-live="polite"></span>
+      <div class="view-counter" id="viewCounter" aria-label="Visitor count">
+        <span>Visitors</span>
+        <span class="counterapi" id="visitorCount" ns="asmahanalsafwan.github.io" action="view" key="homepage" unique="true" noicon="true" nocss="true" nolink="true" noanim="true" aria-live="polite"><span class="counter-note">…</span></span>
       </div>
     </div>
   </footer>
@@ -404,29 +407,23 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Count unique visitors through CounterAPI. The counter remains hidden if the service is unavailable.
-    const viewCounter = document.getElementById('viewCounter');
+    // Visitor counter: use CounterAPI's documented browser embed.
+    // If the service cannot load, keep the footer tidy and show a neutral fallback instead of a broken image.
     const visitorCount = document.getElementById('visitorCount');
-    let counterLoaded = false;
-
-    window.updateVisitorCount = function(response) {
-      const value = response && Number(response.value);
-      if (Number.isFinite(value)) {
-        visitorCount.textContent = value.toLocaleString();
-        viewCounter.hidden = false;
-        counterLoaded = true;
-      }
+    const counterLibrary = document.createElement('script');
+    counterLibrary.async = true;
+    counterLibrary.src = 'https://counterapi.com/c.js?ns=asmahanalsafwan.github.io';
+    counterLibrary.onerror = function() {
+      visitorCount.innerHTML = '<span class="counter-note">unavailable</span>';
     };
-
-    const counterScript = document.createElement('script');
-    counterScript.async = true;
-    counterScript.src = 'https://counterapi.com/api/asmahanalsafwan.github.io/view/homepage?unique=true&callback=updateVisitorCount';
-    counterScript.onerror = function() { viewCounter.hidden = true; };
-    document.body.appendChild(counterScript);
+    document.head.appendChild(counterLibrary);
 
     setTimeout(function() {
-      if (!counterLoaded) viewCounter.hidden = true;
-    }, 6000);
+      const text = visitorCount.textContent.trim();
+      if (!text || text === '…') {
+        visitorCount.innerHTML = '<span class="counter-note">unavailable</span>';
+      }
+    }, 7000);
 
     const shareBtn = document.getElementById('shareBtn');
     const shareStatus = document.getElementById('shareStatus');
