@@ -95,6 +95,8 @@
     .profiles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.profile-card{border:1px solid var(--line);border-radius:14px;padding:22px;background:#fff}.profile-card h3{color:var(--navy);margin:0 0 6px}.profile-card p{color:var(--muted);margin:0 0 12px}
     .contact-card{border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:30px;background:#fff}.contact-card h2{margin:0;color:var(--navy);font-size:1.8rem;font-weight:500}.contact-card p{margin:5px 0 0;color:var(--muted)}
     footer{border-top:1px solid var(--line);padding:24px 0 34px;color:var(--muted);font-family:Arial,sans-serif;font-size:.86rem}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.counterapi{font-weight:700;color:var(--ink)}
+    .visitor-toast{position:fixed;right:22px;bottom:22px;z-index:60;max-width:min(340px,calc(100vw - 32px));padding:13px 16px;border:1px solid rgba(200,155,60,.55);border-radius:10px;background:rgba(255,255,255,.97);color:var(--navy);font-family:Arial,sans-serif;font-size:.92rem;font-weight:700;box-shadow:0 12px 30px rgba(8,38,75,.16);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+    .visitor-toast.show{opacity:1;transform:translateY(0)}
 
     @media(max-width:980px){.navlinks{display:none}.hero-grid{grid-template-columns:1fr}.hero-copy{padding:56px 0 48px}.hero-visual{min-height:360px}.milestone-grid{grid-template-columns:repeat(3,1fr)}.milestone:nth-child(3){border-right:0}.milestone:nth-child(-n+3){border-bottom:1px solid #e4dccf}.research-grid,.profiles-grid{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr}.about-visual{min-height:300px}}
     @media(max-width:700px){.actions{flex-wrap:wrap}.actions .btn{flex:1 1 calc(50% - 7px)}.actions .btn:last-of-type{flex-basis:100%}}
@@ -106,7 +108,6 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Asmahan Matooq S Al Safwan",
-    "honorificPrefix": "Dr",
     "url": "https://asmahanalsafwan.github.io/",
     "jobTitle": "Education Researcher",
     "description": "Education researcher working across physics and science education, STEM education, conceptual change, curriculum and early childhood pedagogy.",
@@ -261,6 +262,7 @@
 </div>
 </section>
 </main>
+<div aria-live="polite" aria-atomic="true" class="visitor-toast" id="visitorToast" role="status"></div>
 <footer>
 <div class="wrap footer-row"><div><strong>© 2026 Asmahan Matooq S Al Safwan | All rights reserved.</strong></div><div>Visitors <span action="view" class="counterapi" key="homepage" noanim="true" nocss="true" noicon="true" nolink="true" ns="asmahanalsafwan.github.io" unique="true">…</span></div></div>
 </footer>
@@ -327,6 +329,57 @@
     syncHeader();
     window.addEventListener('scroll', syncHeader, { passive: true });
     window.addEventListener('resize', syncHeader);
+  }
+
+  // Show a small, non-blocking notice when this browser sees a new visitor total.
+  // It does not create a separate notification when the owner is away from the site.
+  const visitorCounter = document.querySelector('.counterapi');
+  const visitorToast = document.getElementById('visitorToast');
+  let visitorToastTimer;
+
+  function showVisitorToast(message) {
+    if (!visitorToast) return;
+    visitorToast.textContent = message;
+    visitorToast.classList.add('show');
+    window.clearTimeout(visitorToastTimer);
+    visitorToastTimer = window.setTimeout(() => {
+      visitorToast.classList.remove('show');
+    }, 3200);
+  }
+
+  function handleVisitorCount() {
+    if (!visitorCounter) return;
+    const match = visitorCounter.textContent.replace(/,/g, '').match(/\d+/);
+    if (!match) return;
+    const currentCount = Number(match[0]);
+    if (!Number.isFinite(currentCount)) return;
+
+    const storageKey = 'asmahan_last_visitor_count';
+    let previousCount = null;
+    try {
+      const saved = window.localStorage.getItem(storageKey);
+      if (saved !== null) previousCount = Number(saved);
+    } catch (error) {
+      // Local storage may be unavailable in strict privacy modes; the page still works.
+    }
+
+    if (previousCount === null || !Number.isFinite(previousCount)) {
+      showVisitorToast(`Welcome — visitor ${currentCount}.`);
+    } else if (currentCount > previousCount) {
+      showVisitorToast(`Visitor count is now ${currentCount}.`);
+    }
+
+    try {
+      window.localStorage.setItem(storageKey, String(currentCount));
+    } catch (error) {
+      // Ignore storage failures.
+    }
+  }
+
+  if (visitorCounter) {
+    const counterObserver = new MutationObserver(handleVisitorCount);
+    counterObserver.observe(visitorCounter, { childList: true, characterData: true, subtree: true });
+    handleVisitorCount();
   }
 
   const counterScript = document.createElement('script');
